@@ -1,4 +1,4 @@
-package com.setnumd.technologies.cashthemyoung;
+package com.setnumd.technologies.catchthemyoung;
 
 import android.app.Application;
 

@@ -1,4 +1,4 @@
-package com.setnumd.technologies.cashthemyoung.utilities;
+package com.setnumd.technologies.catchthemyoung.utilities;
 
 import java.io.IOException;
 import java.io.InputStream;

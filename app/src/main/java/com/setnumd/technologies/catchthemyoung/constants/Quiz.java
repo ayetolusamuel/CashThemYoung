@@ -1,4 +1,4 @@
-package com.setnumd.technologies.cashthemyoung.constants;
+package com.setnumd.technologies.catchthemyoung.constants;
 
 
 import android.arch.persistence.room.ColumnInfo;

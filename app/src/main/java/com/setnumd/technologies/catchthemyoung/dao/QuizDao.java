@@ -1,4 +1,4 @@
-package com.setnumd.technologies.cashthemyoung.dao;
+package com.setnumd.technologies.catchthemyoung.dao;
 
 
 import android.arch.persistence.room.Dao;
@@ -6,7 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.setnumd.technologies.cashthemyoung.constants.Quiz;
+import com.setnumd.technologies.catchthemyoung.constants.Quiz;
 
 import java.util.List;
 
@@ -14,9 +14,12 @@ import java.util.List;
 public interface QuizDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertToDatabase(List<Quiz> quizList);
+    void insertToDatabase(Quiz quiz);
 
     @Query("SELECT * FROM  quiz_database " )
     List<Quiz> getQuiz();
+
+//    @Delete()
+//    void deleteQuiz(Quiz... quiz);
 
 }
