@@ -19,6 +19,11 @@ public interface QuizDao {
     @Query("SELECT * FROM  quiz_database " )
     List<Quiz> getQuiz();
 
+    @Query("SELECT count(*) FROM quiz_database")
+    Long getDatabaseCount();
+
+
+
 //    @Delete()
 //    void deleteQuiz(Quiz... quiz);
 

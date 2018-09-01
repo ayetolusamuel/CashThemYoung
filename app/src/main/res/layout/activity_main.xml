@@ -77,14 +77,27 @@
         android:layout_centerVertical="true"
         android:visibility="invisible"/>
 
+    <TextView
+        android:id="@+id/questionCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textStyle="italic|bold"
+        android:textColor="@color/color_red"
+        android:textSize="14sp"
+       />
+
 
     <Button
+        android:id="@+id/next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:gravity="bottom|right|end"
         android:text="Next"
+        android:textColor="@color/color_red"
+        android:textStyle="bold|italic"
         android:onClick="nextButtonClicked"
         android:layout_alignParentRight="true" />
 

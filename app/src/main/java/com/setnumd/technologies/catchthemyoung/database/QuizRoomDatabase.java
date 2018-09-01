@@ -10,7 +10,7 @@ import android.content.Context;
 import com.setnumd.technologies.catchthemyoung.constants.Quiz;
 import com.setnumd.technologies.catchthemyoung.dao.QuizDao;
 
-@Database(entities = {Quiz.class}, version = 5, exportSchema = false)
+@Database(entities = {Quiz.class}, version = 1, exportSchema = false)
 public abstract class QuizRoomDatabase extends RoomDatabase {
 private static QuizRoomDatabase INSTANCE;
 private static final String DATABASE_NAME = "quiz_database";
@@ -24,7 +24,8 @@ private static Object lock = new Object();
                                         //create database Here......
                                         INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                                 QuizRoomDatabase.class, DATABASE_NAME)
-                                                .addMigrations(MIGRATION_1_2)
+                                                .fallbackToDestructiveMigration()
+                                                //.addMigrations(MIGRATION_1_2)
                                                 .build();
 
                                 }

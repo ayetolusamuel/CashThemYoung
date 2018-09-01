@@ -1,10 +1,12 @@
 package com.setnumd.technologies.catchthemyoung;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,15 +33,17 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL = "https://raw.githubusercontent.com/ayetolusamuel/api_database_files/master/quiz.json";
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static Context context;
     private   String githubSearchResults;
     private List<Quiz> mQuizList;
     private RadioButton rbOptionA,rbOptionB,rbOptionC,rbOptionD;
-    private TextView tvQuestion,tvHint;
+    private TextView tvQuestion,tvHint,tvQuestionCount;
     private ProgressBar progressBar;
     private Quiz currentQuestion;
     private static int index = 0;
     private int score = 2;
-
+    private Button mButtonNext;
+    private static int databaseCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,11 +56,16 @@ public class MainActivity extends AppCompatActivity {
 //        tvOptionC = findViewById(R.id.tvOptionC);
 //        tvOptionD = findViewById(R.id.tvOptionD);
 
+        displayData();
+
+
         progressBar = findViewById(R.id.progressBar);
         //progressBar.setVisibility(View.VISIBLE);
 
 
-        if (NetworkStatus.getInstance(getApplicationContext()).isOnline()){
+
+
+       /* if (NetworkStatus.getInstance(getApplicationContext()).isOnline()){
            // Toast.makeText(this, "Network Yes", Toast.LENGTH_SHORT).show();
             fetchDataFromServer();
             queryData();
@@ -66,10 +75,40 @@ public class MainActivity extends AppCompatActivity {
            // Toast.makeText(this, "Network No", Toast.LENGTH_SHORT).show();
             queryData();
 
-        }
+        }*/
 
 
 
+    }
+
+    private void displayData() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                long aLong = QuizRoomDatabase.getInstance(getApplicationContext()).quizDao().getDatabaseCount();
+                float aFloat = (float)aLong;
+                final int aInt = (int)(aFloat);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int database = aInt;
+             //System.out.println("database# "+database);  // databasecount = 0 mean no data in  database
+                        if (database == 0){
+
+
+               if (NetworkStatus.getInstance(getApplicationContext()).isOnline()) {
+                   fetchDataFromServer();
+               }else{
+                   Toast.makeText(MainActivity.this, "No Network, check network!!", Toast.LENGTH_SHORT).show();
+               }
+
+                        }else{
+                            queryData();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private void fetchDataFromServer() {
@@ -105,6 +144,10 @@ public class MainActivity extends AppCompatActivity {
                                     if (quizList != null)
                                        // QuizRoomDatabase.getInstance(getApplicationContext()).quizDao().deleteQuiz();
                                         System.out.println("LISTME#### "+quizList.size());
+
+                                    System.out.println("list from database "+databaseCount);
+                                    System.out.println("List from server "+quizList.size());
+
                                     for (Quiz quiz :quizList){
 
                                         QuizRoomDatabase.getInstance(getApplicationContext()).quizDao().insertToDatabase(quiz);
@@ -209,6 +252,12 @@ public class MainActivity extends AppCompatActivity {
             tvHint = findViewById(R.id.hint);
             tvHint.setVisibility(View.INVISIBLE);
             tvQuestion = findViewById(R.id.tvQuestion);
+            tvQuestionCount = findViewById(R.id.questionCount);
+
+
+            mButtonNext = findViewById(R.id.next_button);
+            mButtonNext.setVisibility(View.INVISIBLE);
+
 
            Quiz quiz = quizlist.get(index);
            tvQuestion.setText(quiz.getQuestion());
@@ -217,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
            rbOptionC.setText(quiz.getOptionC());
            rbOptionD.setText(quiz.getOptionD());
            tvHint.setText("Hint : "+quiz.getHints());
+           tvQuestionCount.setText(index+"/"+"20");
 
            index++;
         }
@@ -245,12 +295,13 @@ public class MainActivity extends AppCompatActivity {
           //  Log.d(TAG,"radioButtonClicked: "+radioButton.getText());
 
             if (currentQuestion.getAnswer().equals(radioButton.getText())){
-                Toast.makeText(this, "Correct!!! " +score, Toast.LENGTH_SHORT).show();
                radioGroup.clearCheck();
                 disableRadioButton();
                 tvHint.setVisibility(View.VISIBLE);
                 score = score + 2;
-                //Toast.makeText(this, "Score "+score, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Correct!!! " +score, Toast.LENGTH_SHORT).show();
+
+
             }
             else {
                 Toast.makeText(this, "Incorrect Answer!!!", Toast.LENGTH_SHORT).show();
@@ -258,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
                 disableRadioButton();
                 tvHint.setVisibility(View.VISIBLE);
             }
+            mButtonNext.setVisibility(View.VISIBLE);
 
         }else{
           //  Toast.makeText(this, "Thanks for playing!!!", Toast.LENGTH_SHORT).show();
@@ -291,4 +343,11 @@ public class MainActivity extends AppCompatActivity {
 
 }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        index = 0;
+//        System.out.println("Samuel");
+//        displayData();
+    }
 }
