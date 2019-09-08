@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingLeft="10dp"
-    android:paddingTop="10dp"
+    android:padding="16dp"
     android:layout_height="match_parent"
     tools:context="com.setnumd.technologies.catchthemyoung.MainActivity">
 
@@ -13,7 +12,7 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:layout_marginTop="10dp"
-       android:textSize="14sp"
+       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
        android:text="question"
        android:gravity="center"/>
 
@@ -63,7 +62,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="15sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_dark"
         android:text="Hint:"
         android:maxLength="150"
         android:layout_below="@id/rGroup"/>
@@ -83,7 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:textStyle="italic|bold"
-        android:textColor="@color/color_red"
+        android:textColor="#000000"
+        android:padding="10dp"
         android:textSize="14sp"
        />
 
@@ -93,13 +95,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="bottom|right|end"
+       android:layout_alignParentRight="true"
+        android:padding="10dp"
         android:text="Next"
-        android:textColor="@color/color_red"
-        android:textStyle="bold|italic"
-        android:onClick="nextButtonClicked"
-        android:layout_alignParentRight="true" />
+        android:background="@drawable/curve_shape"
+        android:drawableRight="@drawable/ic_navigate_next_black_24dp"
+        android:textColor="#000000"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:onClick="nextButtonClicked" />
 
 
 </RelativeLayout>

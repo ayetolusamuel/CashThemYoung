@@ -1,16 +1,9 @@
 package com.setnumd.technologies.catchthemyoung.constants;
 
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "quiz_database",indices = {@Index(value = {"question","hints"},unique = true)})
 public class Quiz {
-    @PrimaryKey(autoGenerate = true)
     private int id;
     private String question;
     private String optionA;
@@ -22,31 +15,13 @@ public class Quiz {
     private String hints;
 
 
-
-    @ColumnInfo(name = "question")
-    @NonNull
-    @PrimaryKey(autoGenerate = false)
     public static final String QUESTION = "question";
-
-    @ColumnInfo(name = "optionA")
     public static final String OPTION_A = "opta";
-
-    @ColumnInfo(name = "optionB")
     public static final String OPTION_B = "optb";
-
-    @ColumnInfo(name = "optionC")
     public static final String OPTION_C = "optc";
-
-    @ColumnInfo(name = "optionD")
     public static final String OPTION_D = "optd";
-
-    @ColumnInfo(name = "answer")
     public static final String ANSWER = "answer";
-
-    @ColumnInfo(name = "stage")
     public static final String STAGE = "stage";
-
-    @ColumnInfo(name = "hints")
     public static final String HINTS = "hints";
 
 
@@ -62,7 +37,6 @@ public class Quiz {
         this.hints = hints;
     }
 
-@Ignore
     public Quiz(String question, String optionA, String optionB, String optionC, String optionD, String answer, String stage, String hints) {
         this.question = question;
         this.optionA = optionA;

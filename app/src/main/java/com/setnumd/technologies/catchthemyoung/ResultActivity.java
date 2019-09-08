@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,8 @@ import com.setnumd.technologies.cashthemyoung.R;
 public class ResultActivity extends AppCompatActivity {
     int score;
     Button button;
+    MainActivity mMainActivity;
+    private static final String TAG = "ResultActivity";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,19 @@ public class ResultActivity extends AppCompatActivity {
         TextView scoreTxtView = (TextView) findViewById(R.id.score);
         RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar1);
         ImageView img = (ImageView)findViewById(R.id.img1);
+
+//        CapitaliseName capitaliseName = new CapitaliseName() {
+//            @Override
+//            public void toUppercase(int index) {
+//               getIndex();
+//
+//            }
+//        };
+//
+//        mMainActivity.setOnChangeLister(capitaliseName);
+//
+
+
 
        // int score;
         if (b != null){
@@ -40,21 +56,19 @@ public class ResultActivity extends AppCompatActivity {
             TextView scoreLine = findViewById(R.id.scoreLine);
             scoreLine.setText("Score Line : "+score+"/"+"40");
 
-            if(score >=0 && score<10){
-                img.setBackgroundResource(R.drawable.score_0);
+            if(score >=0 && score<=10){
+                img.setBackgroundResource(R.drawable.sad);
               //  img.setImageResource(R.drawable.score_0);
-            }else if(score >10 && score<20){
-                img.setBackgroundResource(R.drawable.score_2);
+            }
+            else if(score >10 && score<=20){
+                img.setBackgroundResource(R.drawable.fair);
                // img.setImageResource(R.drawable.score_1);
-            }else if(score >20 && score<=24){
-                img.setBackgroundResource(R.drawable.score_3);
+            }else if(score >20 && score<=30){
+                img.setBackgroundResource(R.drawable.happy);
                // img.setImageResource(R.drawable.score_2);
-            }else if(score >25 && score <30){
-                //img.setImageResource(R.drawable.score_3);
-                img.setBackgroundResource(R.drawable.score_4);
             }else if(score >30 && score <=40){
-             //   img.setImageResource(R.drawable.score_5);
-                img.setBackgroundResource(R.drawable.score_5);
+                //img.setImageResource(R.drawable.score_3);
+                img.setBackgroundResource(R.drawable.excellence);
             }
         }
         buttonCheck(score);
@@ -68,6 +82,12 @@ public class ResultActivity extends AppCompatActivity {
 
         }
 
+
+//        private void getIndex(){
+//       int index =  mMainActivity.getIndex();
+//            Log.d(TAG, "getIndex: "+index);
+//        }
+
     private void buttonCheck(int score) {
         if (score>38){
             button.setText("Next Stage!");
@@ -75,6 +95,7 @@ public class ResultActivity extends AppCompatActivity {
         }
         else{
             button.setText("Play Again!");
+
 
         }
     }
@@ -90,6 +111,12 @@ public class ResultActivity extends AppCompatActivity {
             button.setText("Play Again!");
             Toast.makeText(this, "You are not quality, score above 38", Toast.LENGTH_SHORT).show();
 
+            Intent intent = new Intent(ResultActivity.this, MainActivity.class);
+           intent.putExtra("initial_count",0);
+            startActivity(intent);
+
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+            finish();
             //startActivity(new Intent(ResultActivity.this, MainActivity.class));
             //finish();
         }
